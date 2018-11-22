@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  
+  - node
+
+cache: npm
+
+script:
+  - npm install
+  - npm run test
+
+notifications:
+  email:
+    recipients:
+      - agura@bgu.ac.il
+    on_failure: always
