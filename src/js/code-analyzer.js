@@ -60,6 +60,7 @@ const module_builder_third = (root) =>{
     //case 'ForStatement' : for_statement_parser(root); break;
     //case 'UpdateExpression' : update_expression_parser(root); break;
     case 'WhileStatement' : while_statement_parser(root); break;
+    case 'ArrayExpression' : array_expression_parser(root); break;
     //case 'UnaryExpression' : return Unary_Expression_parser(root) ; 
     case 'Literal': return literal_parser(root); 
     default:  return module_builder_forth(root);
@@ -70,6 +71,7 @@ const module_builder_forth = (root) =>{
     switch(root.type){
     case 'BinaryExpression' : return Binary_Expression_parser(root); 
     case 'Identifier': return identifier_parser(root);
+    case 'MemberExpression': return member_expression_parser(root);
     //case 'MemberExpression' : return Member_Expression_parser(root);
     }
 };
@@ -81,6 +83,22 @@ const Binary_Expression_parser = (root) => {
     var  right=  module_builder(root.right);
     var s =  left + ' '+operator +' '+ right ;
     return s;
+};
+
+const array_expression_parser = (root) => {
+    let elememtfirst;
+    var his_name;
+    for(var i =0; i< root.elements.length; i++){
+        elememtfirst = root.elements[i].value;
+        his_name= 'a' + i;
+        global_and_function_variables.push({variables_name: his_name , variable_value: elememtfirst});
+    }
+};
+
+const member_expression_parser = (root) => {
+    var variable_name = 'a' + root.property.value;
+    var value_index = global_and_function_variables.findIndex((x) => x.variables_name === variable_name);
+    return global_and_function_variables[value_index].variable_value;
 };
 
 //takes the new value if there is one from the table by it's name
