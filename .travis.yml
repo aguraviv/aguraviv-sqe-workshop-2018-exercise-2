@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  
+  - 10
   - node
 
 cache: npm
@@ -13,5 +13,5 @@ script:
 notifications:
   email:
     recipients:
-      - agura@bgu.ac.il
+      - avdayan@bgu.ac.il
     on_failure: always
